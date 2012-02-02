@@ -24,3 +24,6 @@ add_jumpstart_pxe_client.sh - A shell script for Solaris that automagically
 adds hosts to a Jumpstart server's client list.  Written for Solaris 10/x86.
 Will probably work on Solars 10/SPARC as well.
 
+fan_modes.sh - A SYSV-style initscript for manually controlling i8k fans on
+Dell laptops.  Itch scratched.
+
