@@ -1,0 +1,131 @@
+#!/bin/bash
+
+# burn_dvd - Shell script that simplifies burning DVD-ROM disks.
+# Written by The Doctor (drwho [at] virtadpt [dot] net) (PGP key ID: 807B17C1)
+# The latest version can always be found at http://drwho.virtadpt.net/burn_dvd
+
+# Licensed under the GPL v2 (http://www.gnu.org/licenses/gpl.html)
+
+# This script comes with no warranty - if it eats your hard drive, blows up your
+# house, kicks your dog, or starts World War III, it's not my fault or my
+# problem.  Similiarly, if you didn't download it from my website, I can't
+# guarantee that it hasn't been modified in some way.  It's your responsibility
+# to read the shell scripts that you download, so don't blame me.
+
+# This script requires the following utilities:
+# cdrtools - http://www.fokus.fhg.de/usr/schilling/cdrecord.html
+# dvd+rw-tools - http://fy.chalmers.se/~appro/linux/DVD+RW/
+
+# If they're not present, this script won't do anything.  Either install the
+# latest versions you can find in your distro of choice or download the source
+# and compile it yourself.
+
+# v1.0	-Initial release.  Itch scratched.
+# v2.0	-Now automagically detects the [AUDIO,VIDEO]_TS directories that
+#	 indicate a video DVD.  If it finds them, the script will automatically
+#	 burn them as a true video DVD.
+#	-Changed comments as the order of execution was altered.
+#	-Made the script a bit more verbose in its execution.
+#	-Added code to determine if the command-line argument passed to the
+#	 script is an ISO-9660 filesystem image, in which case it'll be burned
+#	 as-is.
+#	-Added a final return value to the script.
+#	-Now the user has to give the path to the burner devicefile as a
+#	 command-line argument.
+#	-Updated comments.
+#	-Updated user output.
+#	-mkisofs no longer creates a temporary ISO image, but pumps it right
+#	 thorugh growisofs to conserve disk space.  Okay, so I was backing
+#	 something up and ran out of disk space.. same difference.
+#	-Pulled out the Joliet disk extension switch because it kept causing
+#	 problems.
+#	-Added input validation.
+#	-Came up with some more stuff to add.
+
+# TODO:	-Have the script analyze the output of isoinfo on its own.
+#	-Have the script detect some utilities and carp if it can't find them.
+#	-Check the UID growisofs is executed as - if it's setuid/setgid, then
+#	 don't bother checking the executing UID.
+#	-Check the UID this script is being executed as.  If growisofs isn't
+#	 setuid/setgid, carp and die.
+#	-Make it possible to supply extra command line options to mkisofs and/or
+#	 growisofs.
+
+# Set up the system path.  Some people compile their own software, some people
+# use packages.  Either way, try to find it.  If they put it someplace weird
+# like /opt/schilly, either symlinks will have to be made or this variable will
+# have to be altered by hand.  The PATH variable has been exported so that the
+# executables that growisofs looks for can be successfully found.
+export PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
+
+# Script variables.
+# If $1 or $2 (the command-line arguments to the script) are empty, abend with
+# an error message.
+if [ "$#" -lt 2 ]; then
+	echo "ERROR: Missing command-line arguments."
+	echo "USAGE: $0 /dev/burner_device /path/to/files-to-burn"
+	exit 1
+	fi
+
+# Check the value of $1 and ABEND if it's not a path to a device node.
+echo $1 | grep -q '\/dev\/'
+dev_found=$?
+if [ "$dev_found" -ge 1 ]; then
+	echo "ERROR: First argument wasn't a path to the burner!"
+	echo "USAGE: $0 /dev/burner_device /path/to/files-to-burn"
+	exit 1
+	fi
+
+# Detect the directory structure that signifies a video DVD.  If found, chirp
+# about it and get ready to burn a video DVD for the user.
+if [ -d "$2/VIDEO_TS" ]; then
+	# Some players require the AUDIO_TS/ directory to exist, even if there
+	# isn't anything in it.  Create it for the user because I'm feeling
+	# merciful today.
+	if [ ! -d "$2/AUDIO_TS" -o ! -d "$2//AUDIO_TS" ]; then
+		echo "ERROR!  $2/AUDIO_TS/ directory not found."
+		echo "Technically, to burn a DVD that you can watch in a player, this directory"
+		echo "must exist, even if it's only empty.  Creating it for you.."
+		mkdir $2/AUDIO_TS
+		fi
+
+	# Generate a video DVD image and stream it thorugh growisofs.  What the
+	# hell, it's theoretically possible.
+	echo "Video DVD structure found!  Switching to video DVD mode!"
+	echo "Ready to burn!  Press ENTER to begin."
+	read $stall_for_time
+
+	# If you want to get crazy, you can always add the -overburn option to
+	# growisofs (NOT mkisofs... whoops!).
+	mkisofs -dvd-video $2 | growisofs -Z $1=/dev/fd/0
+
+	# Cap it off.
+	echo "Video DVD burning process completed!  Eject the disk and test it in a DVD player!"
+	exit 0
+	fi
+
+# See if the script has been passed an .iso image of some kind.
+ISO_P=`file $2 | grep 'CD-ROM filesystem data'`
+
+# If the string captured is non-zero in length, then the value of $2 is a path
+# to and the name of an ISO-9660 image file, in which case it'll be burned to
+# disk as-is.
+if [ "$ISO_P" ]; then
+	echo "ISO-9660 image detected!  Burning as-is!"
+	echo "Ready to burn ISO image!  Press ENTER to continue."
+	read $stall_for_time
+	growisofs -Z $1=$2
+	echo "Burning process completed.  Terminating."
+	exit 0
+	fi
+
+# Assuming that we're given a data directory full of files, start the burning
+# process.  The extra args are passed to mkisofs, and cause it to follow
+# symbolic links, use 31 character filenames, and generate rationalised Rock
+# Ridge directory information.
+# Any and all extra command-line arguments to mkisofs/growisofs can be added
+# here as necessary.
+growisofs -Z $1 -dvd-compat -f -l -r $2
+
+# That's all, folks.
+exit 0
