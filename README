@@ -27,3 +27,5 @@ Will probably work on Solars 10/SPARC as well.
 fan_modes.sh - A SYSV-style initscript for manually controlling i8k fans on
 Dell laptops.  Itch scratched.
 
+tormirror.sh - A script to automate the updating of a mirror of torproject.org
+using rsync.
