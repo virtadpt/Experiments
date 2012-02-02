@@ -29,3 +29,15 @@ Dell laptops.  Itch scratched.
 
 tormirror.sh - A script to automate the updating of a mirror of torproject.org
 using rsync.
+
+update_source_trees-1.0.sh - Shell script that automates the process of
+updating /usr/src and /usr/ports on OpenBSD machines from CVS.  Can even do
+initial checkouts if they don't already exist.
+
+make_iso-1.0.sh - Shell script for Linux that automates the process of making
+.iso images to burn to CD-ROM.
+
+burn_dvd - Shell script for Linux that automates the process of burning DVDs,
+either from a directory or as a pre-built .iso iamge.  Can even detect and burn
+video DVDs if the directory structures are in place.
+
