@@ -7,3 +7,20 @@ may not.
 A subset of this code may not work, so beware.
 
 Good luck.
+
+Contents:
+
+init-killswitch.sh - A hacked /bin/init shell script from Gentoo Linux that is
+supposed to go into your initrd when you recompile the kernel.  The idea is
+that it asks you for your password twice - the first time as if you'd mistyped
+it, the second time as if you'd typed it correctly.  If you gave a different
+pre-defined passphrase the first time that's hardcoded in the script it'll
+wipe the LUKS headers of your encrypted root volume and wreck the system
+(assuming that you created a single LUKS volume and used LVM inside of it).
+I haven't tested this yet so be careful.  If you wreck your system I'm not
+responsible.
+
+add_jumpstart_pxe_client.sh - A shell script for Solaris that automagically
+adds hosts to a Jumpstart server's client list.  Written for Solaris 10/x86.
+Will probably work on Solars 10/SPARC as well.
+
