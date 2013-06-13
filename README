@@ -41,3 +41,9 @@ burn_dvd - Shell script for Linux that automates the process of burning DVDs,
 either from a directory or as a pre-built .iso iamge.  Can even detect and burn
 video DVDs if the directory structures are in place.
 
+start-stop-services.sh - An initscript-like script for systemd-enabled laptops.
+Goes in /usr/local/sbin, symlinked into /etc/laptop-mode/nolm-ac-st[art,op].
+The idea is that whenever laptop mode goes on battery, some services that hit
+the disk a lot are shut off to conserve power, and are turned back on when the
+system's on AC again.
+
