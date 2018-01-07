@@ -1,18 +1,17 @@
 #!/bin/bash
 
 # www.example.com
-cd /home/letsencrypt/www.example.com
 
 echo "Renewing the Let's Encrypt SSL cert..."
-python /home/letsencrypt/acme-tiny/acme_tiny.py --account account.key \
-    --csr domain.csr --acme-dir challenges/ > signed.crt
+python /home/letsencrypt/acme_tiny.py --account www/account.key \
+    --csr www/domain.csr --acme-dir /srv/www/challenges > www/signed.crt
 
 echo "Getting Let's Encrypt cross-signed PEM file."
 wget -O - https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem \
-	> intermediate.pem
+	> www/intermediate.pem
 
 echo "Concatenating cross-signed PEM with our SSL certificate."
-cat signed.crt intermediate.pem > chained.pem
+cat www/signed.crt www/intermediate.pem > www/chained.pem
 
 echo "Testing configuration."
 sudo /usr/sbin/nginx -t
