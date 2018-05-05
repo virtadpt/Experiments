@@ -47,3 +47,7 @@ The idea is that whenever laptop mode goes on battery, some services that hit
 the disk a lot are shut off to conserve power, and are turned back on when the
 system's on AC again.
 
+unmark_dump_to_shaarli.py - Utility written in Python which takes a JSON dump
+from an [Unmark](https://github.com/cdevroe/unmark) instance and migrates it
+into a new [Shaarli](https://github.com/shaarli/Shaarli) instnace.
+
