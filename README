@@ -51,3 +51,7 @@ unmark_dump_to_shaarli.py - Utility written in Python which takes a JSON dump
 from an [Unmark](https://github.com/cdevroe/unmark) instance and migrates it
 into a new [Shaarli](https://github.com/shaarli/Shaarli) instnace.
 
+diceware.py - An implementation of the [Diceware](http://world.std.com/~reinhold/diceware.html) algorithm for generating more memorable passwords that fit
+various parameters.  Requires only a basic install of Python 2 and no third
+party modules.  `diceware.py --help` prints the online documentation.
+
