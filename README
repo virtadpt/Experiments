@@ -55,3 +55,5 @@ diceware.py - An implementation of the [Diceware](http://world.std.com/~reinhold
 various parameters.  Requires only a basic install of Python 2 and no third
 party modules.  `diceware.py --help` prints the online documentation.
 
+pelican_timed_post.sh - A shell script which implements timed posts in [Pelican](https://blog.getpelican.com/).
+
