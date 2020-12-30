@@ -10,6 +10,8 @@
 # by: The Doctor [412/724/301/703/415/510] (drwho at virtadpt dot net)
 #     PGP fingerprint: <7960 1CDC 85C9 0B63 8D9F  DD89 3BD8 FF2B 807B 17C1>
 
+License: GPLv3
+
 # TODO:
 # - 
 
