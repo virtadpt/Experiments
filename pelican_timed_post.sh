@@ -56,8 +56,8 @@ grep -Hi '^Status: scheduled' *.md | awk -F: '{print $1}' > timed_posts.txt
 # are supposed to be posted.
 set ANYTHING_TO_POST
 for i in `cat timed_posts.txt`; do
-    POST_DATE=`grep -i '^Date: ' $i | awk '{print $2}'`
-    if [ $POST_DATE == $TODAY ]; then
+    POST_DATE=$(grep -i '^Date: ' $i | awk '{print $2}')
+    if [ "$POST_DATE" == $TODAY ]; then
         mv $i $i.bak
         sed 's/Status: scheduled/Status: published/' $i.bak > $i
         ANYTHING_TO_POST=1
