@@ -1,4 +1,4 @@
-This is a public repository of all of the crazy stuff I mess around with.  In
+This is a public repository of all of the stuff I mess around with.  In
 here, you'll find shell scripts I wrote to carry out certain tasks, ideas that
 made me go "Hmmmm....", source code, and whatever else I happened to be messing
 with at the time.  Some of you may find it helpful or interesting, some of you
