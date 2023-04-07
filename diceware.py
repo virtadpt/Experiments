@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # vim: set expandtab tabstop=4 shiftwidth=4 :
 
@@ -107,8 +107,8 @@ args = argparser.parse_args()
 
 # See if the user wants to view the list of separators .
 if args.list_separators:
-    print "This is the list of characters the utility will choose from to separate words.  I've tried to err on the side of making them WAF friendly."
-    print separators
+    print("This is the list of characters the utility will choose from to separate words.  I've tried to err on the side of making them WAF friendly.")
+    print(separators)
     sys.exit(1)
 
 # If the user has supplied a separator, extract it.
@@ -167,7 +167,7 @@ for i in range(0, int(args.words)):
     passphrase = passphrase + picked_word
 
 # Print the generated passphrase.
-print passphrase
+print(passphrase)
 
 # Fin.
 sys.exit(0)
