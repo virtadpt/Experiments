@@ -49,11 +49,13 @@ system's on AC again.
 
 unmark_dump_to_shaarli.py - Utility written in Python which takes a JSON dump
 from an [Unmark](https://github.com/cdevroe/unmark) instance and migrates it
-into a new [Shaarli](https://github.com/shaarli/Shaarli) instnace.
+into a new [Shaarli](https://github.com/shaarli/Shaarli) instance.
 
 diceware.py - An implementation of the [Diceware](http://world.std.com/~reinhold/diceware.html) algorithm for generating more memorable passwords that fit
 various parameters.  Requires only a basic install of Python 2 and no third
 party modules.  `diceware.py --help` prints the online documentation.
 
 pelican_timed_post.sh - A shell script which implements timed posts in [Pelican](https://blog.getpelican.com/).
+
+upload_wiki_pages_to_bookstack.py - Research code in Python that pumps lots of Markdown files into a [Bookstack](https://www.bookstackapp.com/) wiki using the Bookstack REST API and the [bookstack](https://github.com/coffeepenbit/bookstack) Python module.
 
